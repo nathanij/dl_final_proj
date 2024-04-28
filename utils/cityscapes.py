@@ -33,15 +33,14 @@ class CityscapesDataset(Dataset):
 
         return img_mask
     
-def get_loaders(batch_size = 32, subclass = None):
-    data_path = '/Users/nathanieljames/Desktop/dl_final_proj/cityscapes_data'
-    if subclass is not None:
-        data_path = os.path.join(data_path, subclass)
+def get_loaders(batch_size = 32, subclass = 'combined'):
+    data_path = '/Users/nathanieljames/Desktop/dl_final_proj/target_fog'
+    data_path = os.path.join(data_path, subclass)
     train_path = os.path.join(data_path, 'train')
     val_path = os.path.join(data_path, 'val')
     transform_init = transform.Compose([transform.ToTensor()])
     dataset = CityscapesDataset(image_dir=train_path, cut_half=True, transform=transform_init)
     val_dataset = CityscapesDataset(image_dir=val_path, cut_half=True, transform=transform_init)
-    dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
+    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
     valloader = DataLoader(val_dataset)
     return dataloader, valloader
